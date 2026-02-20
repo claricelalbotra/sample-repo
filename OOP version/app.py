@@ -35,8 +35,8 @@ def perform_register():
         user_id = request.form.get('user_id')
         surname = request.form.get('surname')
         firstname = request.form.get('firstname')
-        mi = request.form.get('mi')
-        full_name = f"{surname}, {firstname} {mi + '.' if mi else ''}".strip()
+        mid = request.form.get('mi')
+        full_name = f"{surname}, {firstname} {mid + '.' if mid else ''}".strip()
         contact = request.form.get('contact')
 
         if role == "student":
