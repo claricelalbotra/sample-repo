@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login - DIGITS-ASMS</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+        --lnu-blue: #000053;
+        --lnu-blue-light: #3434B1;
+        --lnu-gold: #FFAE10;
+        --text-white: #ffffff;
+        --text-dark: #000;
+    }
+    * { box-sizing: border-box; margin:0; padding:0; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(rgba(0, 0, 83, 0.8), rgba(0, 0, 83, 0.95)),
+                  url('{{ url_for("static", filename="8.jpg") }}') center center fixed;
+      background-size: cover;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: white;
+    }
+    .header-bar {
+        width: 100%;
+        background: linear-gradient(90deg, var(--lnu-blue) 30%, var(--lnu-blue-light) 70%);
+        color: var(--text-white);
+        padding: 1rem 3rem;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 10;
+    }
+    .logo-group { display: flex; align-items: center; gap: 15px; }
+    .logo-group img { height: 60px; width: auto; }
+    .university-text { line-height: 1.1; margin-right: 20px;}
+    .university-text h2 { font-size: 1.5rem; font-weight: 800; margin: 0; }
+    .university-text p { font-size: 0.8rem; color: var(--lnu-gold); margin-top: 2px; }
+
+    .login-wrapper {
+        margin-top: 50px;
+        width: 90%;
+        max-width: 450px;
+        background: var(--text-white);
+        border-radius: 20px;
+        padding: 3rem 2rem;
+        text-align: center;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        color: var(--text-dark);
+    }
+    .login-wrapper h2 { color: var(--lnu-blue); margin-bottom: 2rem; font-size: 2rem; font-weight: 700; }
+    .input-group { margin-bottom: 1.5rem; text-align: left; }
+    .input-group label { display: block; margin-bottom: 0.5rem; color: var(--lnu-blue); font-size: 0.9rem; font-weight: 600; }
+    .input-group input { width: 100%; padding: 1rem; border-radius: 8px; border: 1px solid #ced4da; background: #f8f9fa; color: var(--lnu-blue); font-size: 1rem; }
+
+    .btn-login { width: 100%; padding: 1rem; border-radius: 8px; background: linear-gradient(135deg, var(--lnu-blue), var(--lnu-blue-light)); color: var(--text-white); font-weight: 700; font-size: 1.1rem; cursor: pointer; border: none; transition: 0.3s; }
+    .btn-login:hover { opacity: 0.9; transform: translateY(-1px); }
+
+    .register-link { margin-top: 1.5rem; display: block; color: #6c757d; font-size: 0.95rem; }
+    .register-link a { color: var(--lnu-blue-light); text-decoration: none; font-weight: 600; }
+    .register-link a:hover { text-decoration: underline; }
+
+    .flash-message {
+        background:#ff4d4d;
+        padding:10px;
+        color:white;
+        margin-bottom:15px;
+        border-radius:5px;
+        text-align:center;
+        font-weight:bold;
+    }
+  </style>
+</head>
+<body>
+    <div class="header-bar">
+        <div class="logo-group">
+            <img src="{{ url_for('static', filename='LNU_LOGO.png') }}" alt="LNU">
+            <img src="{{ url_for('static', filename='digits_logo.png') }}" alt="DIGITS">
+            <div class="university-text">
+                <h2>LEYTE NORMAL UNIVERSITY</h2>
+                <p>Tacloban City</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="login-wrapper">
+        <h2>Portal Login</h2>
+
+        <!-- FLASH MESSAGE -->
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <div class="flash-message">{{ messages[0] }}</div>
+          {% endif %}
+        {% endwith %}
+
+        <form action="{{ url_for('perform_login') }}" method="POST">
+            <div class="input-group">
+                <label>ID Number (Username)</label>
+                <input type="text" name="username" placeholder="Enter ID" required>
+            </div>
+            <div class="input-group">
+                <label>Password (Enter ID again)</label>
+                <input type="password" name="password" placeholder="Enter ID" required>
+            </div>
+            <button type="submit" class="btn-login">Login</button>
+        </form>
+        <div class="register-link">
+            No account yet? <a href="{{ url_for('register') }}">Register Here</a>
+        </div>
+    </div>
+</body>
+</html>

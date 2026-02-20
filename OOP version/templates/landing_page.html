@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Welcome to DIGITS-ASMS</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+        --lnu-blue: #000053;
+        --lnu-blue-light: #3434B1;
+        --lnu-gold: #FFAE10;
+        --text-white: #ffffff;
+    }
+    * { box-sizing: border-box; margin:0; padding:0; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(
+          rgba(0, 0, 83, 0.9),
+          rgba(0, 0, 83, 0.85)
+      ),
+      url('{{ url_for('static', filename="8.jpg") }}') center center fixed;
+      background-size: cover;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: var(--text-white);
+    }
+
+    .header-bar {
+        width: 100%;
+        background: linear-gradient(90deg, var(--lnu-blue) 30%, var(--lnu-blue-light) 70%);
+        color: var(--text-white);
+        padding: 1rem 3rem;
+        display: flex;
+        justify-content: flex-start; /* Aligned left to accommodate both logos */
+        align-items: center;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        position: absolute; /* Sits on top */
+        top: 0;
+        left: 0;
+        z-index: 10;
+    }
+    .logo-group { display: flex; align-items: center; gap: 15px; }
+    .logo-group img { height: 60px; width: auto; }
+    .university-text { line-height: 1.1; margin-right: 20px;}
+    .university-text h2 { font-size: 1.5rem; font-weight: 800; margin: 0; }
+    .university-text p { font-size: 0.8rem; color: var(--lnu-gold); margin-top: 2px; }
+
+
+    /* Main Content Centered */
+    .hero-container {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        width: 100%;
+        padding: 2rem;
+        margin-top: 60px; /* Offset for header */
+    }
+
+    /* Typography matching the screenshot */
+    .hero-title {
+        font-size: 4rem;
+        font-weight: 700;
+        line-height: 1.1;
+        margin-bottom: 1.5rem;
+    }
+
+    .hero-title span.highlight {
+        color: var(--lnu-gold);
+    }
+
+    .hero-subtitle {
+        font-size: 1.1rem;
+        max-width: 700px;
+        margin-bottom: 3rem;
+        font-weight: 300;
+        line-height: 1.6;
+        opacity: 0.9;
+    }
+
+    /* Button Stack */
+    .action-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        width: 100%;
+        max-width: 350px;
+    }
+
+    /* Pill Buttons (Outline Style) */
+    .btn-outline {
+        display: block;
+        width: 100%;
+        padding: 1rem 2rem;
+        border: 2px solid var(--lnu-gold);
+        border-radius: 50px; /* Pill shape */
+        color: var(--text-white);
+        text-decoration: none;
+        font-size: 1.1rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        background: transparent;
+    }
+
+    .btn-outline:hover {
+        background: var(--lnu-gold);
+        color: var(--lnu-blue);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(255, 174, 16, 0.3);
+    }
+
+  </style>
+</head>
+<body>
+    <div class="header-bar">
+        <div class="logo-group">
+            <img src="{{ url_for('static', filename='LNU_LOGO.png') }}" alt="LNU Seal">
+            <img src="{{ url_for('static', filename='digits_logo.png') }}" alt="DIGITS Logo">
+
+            <div class="university-text">
+                <h2>LEYTE NORMAL UNIVERSITY</h2>
+                <p>Tacloban City</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="hero-container">
+        <h1 class="hero-title">
+            Welcome to <span class="highlight">DIGITS-ASMS</span>
+        </h1>
+
+        <p class="hero-subtitle">
+            The Attendance and Sanctions Management System (ASMS) portal is now active.
+            Please select your role below to proceed with registration or login.
+        </p>
+
+        <div class="action-buttons">
+            <a href="{{ url_for('register', role='student') }}" class="btn-outline">I'm a Student</a>
+            <a href="{{ url_for('register', role='officer') }}" class="btn-outline">I'm a DIGITS Officer</a>
+        </div>
+
+        <div style="margin-top: 2rem;">
+            <p style="font-size: 0.9rem;">Already have an account? <a href="{{ url_for('login') }}" style="color: var(--lnu-gold);">Log In Here</a></p>
+        </div>
+    </div>
+</body>
+</html>

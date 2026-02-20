@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Register - LNU-ASMS</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* Reuse variables */
+    :root {
+        --lnu-blue: #000053; /* Navy Blue */
+        --lnu-blue-light: #3434B1; /* Medium Blue */
+        --lnu-gold: #FFAE10; /* Golden Yellow */
+        --text-white: #ffffff;
+        --text-dark: #000;
+    }
+    * { box-sizing: border-box; margin:0; padding:0; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      /* Background remains the dark blue overlay */
+      background: linear-gradient(rgba(0, 0, 83, 0.8), rgba(0, 0, 83, 0.95)),
+                  url('{{ url_for('static', filename="8.jpg") }}') center center fixed;
+      background-size: cover;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: white; /* Default text color for body, overwritten in form-wrapper */
+    }
+
+    /* Header CSS (Same as landing) */
+    .header-bar {
+        width: 100%;
+        background: linear-gradient(90deg, var(--lnu-blue) 30%, var(--lnu-blue-light) 70%);
+        color: var(--text-white);
+        padding: 1rem 3rem;
+        display: flex;
+        justify-content: flex-start; /* Aligned left to accommodate both logos */
+        align-items: center;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        position: absolute; /* Sits on top */
+        top: 0;
+        left: 0;
+        z-index: 10;
+    }
+    .logo-group { display: flex; align-items: center; gap: 15px; }
+    .logo-group img { height: 60px; width: auto; }
+    .university-text { line-height: 1.1; margin-right: 20px;}
+    .university-text h2 { font-size: 1.5rem; font-weight: 800; margin: 0; }
+    .university-text p { font-size: 0.8rem; color: var(--lnu-gold); margin-top: 2px; }
+
+  .form-wrapper {
+    margin-top: 120px;
+    margin-bottom: 50px;
+    width: 95%;
+    max-width: 700px;
+    background: var(--text-white);
+    border-radius: 20px;
+    padding: 2.5rem;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    color: var(--text-dark);
+
+    /* 🔥 Add these: */
+    max-height: 70vh;        /* adjusts height */
+    overflow-y: auto;        /* enables scrolling */
+    overflow-x: hidden;      /* removes side scroll */
+}
+
+
+    .form-title { text-align: center; margin-bottom: 2rem; }
+    .form-title h2 { color: var(--lnu-blue); /* Changed to Navy Blue */ font-size: 2rem; font-weight: 700; }
+    .form-title p { color: #6c757d; /* Changed to dark grey */ font-size: 0.9rem; }
+
+    .form-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+    .full-width { grid-column: span 2; }
+
+    @media(max-width: 600px) { .form-grid { grid-template-columns: 1fr; } .full-width { grid-column: span 1; } }
+
+    .input-group label { display: block; margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--lnu-blue); /* Dark blue label */ }
+    .input-group input, .input-group select {
+        width: 100%; padding: 0.8rem;
+        background: #f8f9fa; /* Light grey input background for contrast */
+        border: 1px solid #ced4da;
+        border-radius: 8px; font-size: 1rem; color: var(--text-dark);
+    }
+
+    /* Register Button: CHANGED to SOLID BLUE */
+    .btn-submit {
+        grid-column: span 2;
+        width: 100%; padding: 1rem;
+        background: linear-gradient(135deg, var(--lnu-blue), var(--lnu-blue-light)); /* Blue Gradient */
+        color: var(--text-white);
+        border: none; border-radius: 50px;
+        font-weight: 700; font-size: 1.1rem;
+        cursor: pointer; margin-top: 1rem;
+        transition: transform 0.2s, opacity 0.2s;
+    }
+    .btn-submit:hover { transform: scale(1.02); opacity: 0.9; }
+
+    .login-link { text-align: center; margin-top: 1.5rem; grid-column: span 2; }
+    .login-link a { color: var(--lnu-blue-light); text-decoration: none; font-weight: 600; }
+  </style>
+</head>
+<body>
+    <div class="header-bar">
+        <div class="logo-group">
+            <img src="{{ url_for('static', filename='LNU_LOGO.png') }}" alt="LNU">
+            <img src="{{ url_for('static', filename='digits_logo.png') }}" alt="DIGITS">
+            <div class="university-text">
+                <h2>LEYTE NORMAL UNIVERSITY</h2>
+                <p>Tacloban City</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-wrapper">
+        <div class="form-title">
+            <h2>{{ role_name }} Registration</h2>
+            <p>Enter your details below. Your ID Number will serve as your password.</p>
+        </div>
+
+        <form action="{{ url_for('perform_register') }}" method="POST">
+            <input type="hidden" name="role" value="{{ role }}">
+
+            <div class="form-grid">
+                <div class="input-group full-width">
+                    <label>ID Number (This will be your username & password)</label>
+                    <input type="text" name="user_id" placeholder="Enter ID Number" required>
+                </div>
+
+                <div class="input-group full-width">
+                    <label>Surname</label>
+                    <input type="text" name="surname" placeholder="e.g. Dela Cruz" required>
+                </div>
+                <div class="input-group">
+                    <label>First Name</label>
+                    <input type="text" name="firstname" placeholder="e.g. Juan" required>
+                </div>
+                <div class="input-group">
+                    <label>M.I.</label>
+                    <input type="text" name="mi" placeholder="A" maxlength="3">
+                </div>
+
+                <div class="input-group">
+                    <label>Year Level</label>
+                    <select name="year_level" required>
+                        <option value="">Select</option>
+                        <option value="1">1st Year</option>
+                        <option value="2">2nd Year</option>
+                        <option value="3">3rd Year</option>
+                        <option value="4">4th Year</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>Section</label>
+                    <input type="text" name="section" placeholder="e.g. AI11" required>
+                </div>
+
+                {% if role_key == 'officer' %}
+                <div class="input-group full-width">
+                    <label>Position</label>
+                    <input type="text" name="position" placeholder="e.g. President" required>
+                </div>
+                {% endif %}
+
+                <div class="input-group full-width">
+                    <label>Contact Number</label>
+                    <input type="tel" name="contact" placeholder="09xxxxxxxxx" required>
+                </div>
+
+                <button type="submit" class="btn-submit">Register</button>
+
+                <div class="login-link">
+                    Already registered? <a href="{{ url_for('login') }}">Log In Here</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
